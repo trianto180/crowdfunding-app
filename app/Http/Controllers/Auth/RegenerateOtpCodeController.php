@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Events\UserRegisteredEvent;
+use Mail;
 use App\User;
+use App\Mail\UserOtpMail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RegenerateOtpCodeController extends Controller
 {
@@ -14,15 +17,22 @@ class RegenerateOtpCodeController extends Controller
             'email' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        $user->generate_otp_code();
-
-        $data['user'] = $user;
+        $user_email = User::where ('email' , $request->email)->first();
+        $otp = Otp::where('user_id',$user_email->id)->first();
+        if (!$user_email) {
+            return response()->json([
+                'response_code' => '01',
+                'response_message' => 'Email tidak ditemukan'
+            ], 401);
+        } else {
+        $user_email->generate_otp_code();
         
+        event(new UserRegisteredEvent($otp));
+
         return response()->json([
             'response_code' => '00',
-            'response_message' => 'otp berhasil digenerate, silahkan cek email untuk melihat kode otp'
-        ]);
+            'response_message' => 'Kode Otp berhasil di generate, silahkan di cek kembali ke akun email anda '
+        ], 200);
+        }
     }
 }
