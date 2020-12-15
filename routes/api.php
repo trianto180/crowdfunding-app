@@ -1,8 +1,22 @@
 <?php
 
-Route::namespace('Auth')->group(function(){
+use Illuminate\Support\Facades\Route;
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth',
+    'namespace' => 'Auth'
+], function(){
     Route::post('register', 'RegisterController');
-    Route::post('login', 'LoginController');
+    Route::post('regenerate-otp', 'RegenerateOtpCodeController');
     Route::post('verification', 'VerificationController');
-    Route::post('regenerate_otp', 'RegenerateOtpController');
+    Route::post('update-password', 'UpdatePasswordController');
+    Route::post('login', 'LoginController');
+});
+
+Route::group([
+    'middleware' => ['api', 'email_verified', 'auth:api'],
+], function(){
+    Route::get('profile/show', 'ProfileController@show');
+    Route::post('profile/update', 'ProfileCOntroller@update');
 });

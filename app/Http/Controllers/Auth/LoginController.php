@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function __invoke(Request $request)
     {
         $request->validate([
@@ -14,9 +20,19 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (!$token = auth()->attempt($request->only('email', 'password'))){
+        $credentiials = $request->only(['email', 'password']);
+
+        if(! $token = auth()->attempt($credentiials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return response()->json(compact('token'));
+
+        $data['token'] = $token;
+        $data['user'] = auth()->user();
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'user berhasil login',
+            'data' => $data
+        ], 200);
     }
 }
