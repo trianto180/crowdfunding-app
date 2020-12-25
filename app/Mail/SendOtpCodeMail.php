@@ -8,19 +8,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserRegistedrMail extends Mailable
+class SendOtpCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
+    protected $user, $pesan;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $pesan)
     {
         $this->user = $user;
+            $this->pesan = $pesan;
     }
 
     /**
@@ -30,10 +31,10 @@ class UserRegistedrMail extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com')
-                ->view('send_email_user_registered')
-                ->with([
-                    'name' => $this->user->name,
-                ]);
+        return $this->view('emails.otp_code')
+            ->with([
+                'user' => $this->user,
+                'pesan' => $this->pesan,
+            ]);
     }
 }
