@@ -27,7 +27,7 @@
                 {{ campaign.description }}
             </v-card-text>
             <v-card-actions>
-                <v-btn block color="primary" @click="donate" :disabled="campaign.collected >= campaign.required">
+                <v-btn block color="primary" @click="handleClick" :disabled="campaign.collected >= campaign.required">
                     <v-icon>mdi-money</v-icon> &nbsp;
                     DONATE
                 </v-btn>
@@ -35,7 +35,11 @@
         </v-card>
     </div>
 </template>
+
 <script>
+</script>
+<script>
+import { mapActions, mapMutations } from 'vuex'
 export default {
     data: () => ({
         campaign: {}, //object campaign
@@ -58,7 +62,7 @@ export default {
             })
         },
         donate(){
-            alert('donate')
+            this.tambahTransaksi()
         }
     }
 };

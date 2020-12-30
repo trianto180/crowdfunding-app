@@ -62,7 +62,7 @@
         <v-btn icon>
             <v-badge color="orange" overlap >
                 <template v-slot:badge >
-                    <span>3</span>
+                    <span>{{ $store.state.count }}</span>
                 </template>
             <v-icon>mdi-cash-multiple</v-icon>
             </v-badge>
@@ -88,7 +88,7 @@
         <v-btn icon>
             <v-badge color="orange" overlap>
                 <template  v-slot:badge>
-                    <span>3</span>
+                    <span>{{ $store.state.donate }}</span>
                 </template>
                 <v-icon>mdi-cash-multiple</v-icon>
             </v-badge>
@@ -115,6 +115,7 @@
     </v-app>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default{
     name: 'App',
     data: () => ({
@@ -131,4 +132,5 @@ export default{
         },
     }
 }
+
 </script>
