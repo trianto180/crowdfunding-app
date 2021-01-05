@@ -27,7 +27,7 @@
                 {{ campaign.description }}
             </v-card-text>
             <v-card-actions>
-                <v-btn block color="primary" @click="handleClick" :disabled="campaign.collected >= campaign.required">
+                <v-btn block color="primary" @click="donate" :disabled="campaign.collected >= campaign.required">
                     <v-icon>mdi-money</v-icon> &nbsp;
                     DONATE
                 </v-btn>
@@ -35,11 +35,8 @@
         </v-card>
     </div>
 </template>
-
 <script>
-</script>
-<script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations} from 'vuex';
 export default {
     data: () => ({
         campaign: {}, //object campaign
@@ -48,22 +45,33 @@ export default {
         this.go()
     },
     methods: {
-        go(){
-            let{ id } = this.$route.params
-            let url = '/api/campaign/'+id
-            axios.get(url)
-            .then((response) => {
-                let { data } = response.data
-                this.campaign = data.campaign
-            })
-            .catch((error) => {
-                let { responses } = error
-                console.log(responses)
-            })
-        },
+        ...mapMutations({
+            tambahTransaksi : 'transaction/insert'
+        }),
+        ...mapActions({
+            setAlert : 'alert/set'
+        }),
         donate(){
             this.tambahTransaksi()
+            this.setAlert({
+                status : true,
+                color : 'success',
+                text : 'Transaksi berhasil ditambahkan'
+            })
+        },
+        go(){
+        let{ id } = this.$route.params
+        let url = '/api/campaign/'+id
+        axios.get(url)
+        .then((response) => {
+            let { data } = response.data
+            this.campaign = data.campaign
+        })
+        .catch((error) => {
+            let { responses } = error
+            console.log(responses)
+        })
         }
     }
-};
+}
 </script>

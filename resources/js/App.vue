@@ -1,6 +1,7 @@
 <template>
     <!--slideBar-->
     <v-app>
+    <alert></alert>
     <v-navigation-drawer app v-model="drawer">
         <v-list>
             <v-list-item v-if="!guest">
@@ -60,12 +61,13 @@
         <v-spacer></v-spacer>
 
         <v-btn icon>
-            <v-badge color="orange" overlap >
+            <v-badge color="orange" overlap v-if="transactions>0">
                 <template v-slot:badge >
-                    <span>{{ $store.state.count }}</span>
+                    <span>{{ transactions }}</span>
                 </template>
             <v-icon>mdi-cash-multiple</v-icon>
             </v-badge>
+            <v-icon v-else>mdi-cash-multiple</v-icon>
         </v-btn>
 
         <v-text-field
@@ -86,12 +88,13 @@
         <v-spacer></v-spacer>
 
         <v-btn icon>
-            <v-badge color="orange" overlap>
+            <v-badge color="orange" overlap v-if="transactions>0">
                 <template  v-slot:badge>
-                    <span>{{ $store.state.donate }}</span>
+                    <span>{{ transactions }}</span>
                 </template>
                 <v-icon>mdi-cash-multiple</v-icon>
             </v-badge>
+            <v-icon v-else>mdi-cash-multiple</v-icon>
         </v-btn>
     </v-app-bar>
     <!--content-->
@@ -115,9 +118,13 @@
     </v-app>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import Alert from './components/alert.vue'
 export default{
     name: 'App',
+    components : {
+        Alert : () => import('./components/alert')
+    },
     data: () => ({
         drawer: false,
         menus: [
@@ -128,9 +135,12 @@ export default{
     }),
     computed: {
         isHome () {
-            return(this.$route.path==='/' || this.$route.path==='/home')
+            return (this.$route.path==='/' || this.$route.path)
         },
-    }
+        ...mapGetters({
+            transactions : 'transaction/transactions'
+        }),
+    },
 }
 
 </script>

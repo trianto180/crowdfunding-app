@@ -1,17 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import donate from './donate'
+import transaction from './stores/transaction.js'
+import alert from './stores/alert.js'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        donate,
-    },
-    store,
-    methods: {
-        handleClick() {
-            this.$store.commit('increment')
-        }
+        transaction,
+        alert
     }
-});
+})
