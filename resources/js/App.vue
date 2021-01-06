@@ -1,7 +1,12 @@
 <template>
     <!--slideBar-->
     <v-app>
-    <alert></alert>
+    <alert />
+
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="scale-transition">
+        <search @closed="closeDialog" />
+    </v-dialog>
+    
     <v-navigation-drawer app v-model="drawer">
         <v-list>
             <v-list-item v-if="!guest">
@@ -77,8 +82,9 @@
         flat
         label="Search"
         prepend-inner-icon="mdi-magnify"
-        solo-inverted></v-text-field>
-    </v-app-bar>
+        solo-inverted
+        @click.stop="dialog = true"></v-text-field>
+        </v-app-bar>
 
     <v-app-bar app color="success" dark v-else>
         <v-btn icon @click.stop="$router.go(-1)">
@@ -119,11 +125,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import Alert from './components/alert.vue'
+import AlertComponent from "./components/Alert.vue";
 export default{
     name: 'App',
     components : {
-        Alert : () => import('./components/alert')
+        Alert : () => import('./components/Alert'),
+        Search : () => import('./components/Search')
     },
     data: () => ({
         drawer: false,
@@ -132,15 +139,20 @@ export default{
             { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' },
         ],
         guest: false,
+        dialog: false,
     }),
     computed: {
         isHome () {
-            return (this.$route.path==='/' || this.$route.path)
+            return (this.$route.path==='/' || this.$route.path==='/home')
         },
         ...mapGetters({
             transactions : 'transaction/transactions'
         }),
     },
+    methods: {
+        closeDialog (value) {
+            this.dialog = value
+        }
+    }
 }
-
 </script>
