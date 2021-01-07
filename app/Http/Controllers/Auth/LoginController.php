@@ -23,7 +23,7 @@ class LoginController extends Controller
         $credentiials = $request->only(['email', 'password']);
 
         if(! $token = auth()->attempt($credentiials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Email dan Password Salah'], 401);
         }
 
         $data['token'] = $token;
