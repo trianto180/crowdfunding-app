@@ -64,4 +64,17 @@ class BlogController extends Controller
         'data' => $data
     ], 200);
     }
+    
+    public function index()
+    {
+        $blogs = Blog::paginate(2);
+
+        $data['blogs'] = $blogs;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'data blogs berhasil ditampilkan',
+            'data' => $data
+        ], 200);
+    }
 }

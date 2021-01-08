@@ -2258,7 +2258,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setDialogStatus: 'dialog/setStatus',
     setDialogComponent: 'dialog/setComponent',
     setAuth: 'auth/set',
-    setAlert: 'alert/set'
+    setAlert: 'alert/set',
+    checkToken: 'auth/checkToken'
   })), {}, {
     logout: function logout() {
       var _this = this;
@@ -2286,7 +2287,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       });
     }
-  })
+  }),
+  mounted: function mounted() {
+    if (this.user) {
+      this.checkToken(this.user);
+    }
+  }
 });
 
 /***/ }),
@@ -3690,7 +3696,7 @@ var render = function() {
       _vm.isHome
         ? _c(
             "v-app-bar",
-            { attrs: { app: "", color: "success", dark: "" } },
+            { attrs: { app: "", color: "info", dark: "" } },
             [
               _c("v-app-bar-nav-icon", {
                 on: {
@@ -3766,7 +3772,7 @@ var render = function() {
           )
         : _c(
             "v-app-bar",
-            { attrs: { app: "", color: "success", dark: "" } },
+            { attrs: { app: "", color: "info", dark: "" } },
             [
               _c(
                 "v-btn",
@@ -65681,6 +65687,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
     }
   }, {
+    path: '/auth/social/:provider/callback',
+    name: 'social',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Social.vue */ "./resources/js/views/Social.vue"));
+    }
+  }, {
     path: '*',
     redirect: '/'
   }]
@@ -65743,7 +65755,7 @@ __webpack_require__.r(__webpack_exports__);
   namespaced: true,
   state: {
     status: false,
-    color: 'success',
+    color: '',
     text: ''
   },
   mutations: {
@@ -65783,6 +65795,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
@@ -65797,6 +65812,19 @@ __webpack_require__.r(__webpack_exports__);
     set: function set(_ref, payload) {
       var commit = _ref.commit;
       commit('set', payload);
+    },
+    checkToken: function checkToken(_ref2, payload) {
+      var commit = _ref2.commit;
+      var config = {
+        headers: {
+          'Authorization': 'Bearer' + payload.token
+        }
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/auth/check-token', {}, config).then(function (response) {
+        commit('set', payload);
+      })["catch"](function (error) {
+        commit('set', {});
+      });
     }
   },
   getters: {

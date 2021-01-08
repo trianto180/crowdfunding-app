@@ -6,14 +6,20 @@
             </v-img>
 
             <v-card-actions>
-                <v-progress-linear v-model="progress" color="blue-grey" height="7"></v-progress-linear>
+                <v-progress-linear v-model="progress" color="info" height="7"></v-progress-linear>
             </v-card-actions>
 
             <v-card-actions>
                 <v-icon>mdi-cash</v-icon>
                 <span> Rp {{ campaign.required.toLocaleString('id-ID') }} </span>
                 <v-spacer></v-spacer>
-                <span> {{ progress }}%</span>
+                <v-progress-circular
+                v-model="progress"
+                :size="40"
+                color="info"
+                >
+                {{ progress }}%
+                </v-progress-circular>
             </v-card-actions>
         </v-card>
     </div>

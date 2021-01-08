@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-toolbar dark color="success">
+        <v-toolbar dark color="info">
             <v-btn icon dark @click.native="close">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
@@ -34,6 +34,14 @@
                     @click="submit"
                 > Login
                 <v-icon right dark>mdi-lock-open</v-icon>
+                </v-btn>
+
+                <v-btn
+                    color="primary lighten-1"
+                    @click="authProvider('google')"
+                >
+                    Login With google
+                    <v-icon right dark>mdi-google</v-icon>
                 </v-btn>
             </div>
             </v-form>
@@ -110,6 +118,21 @@ export default {
         },
         close() {
             this.$emit('closed', false)
+        },
+        authProvider(provider) {
+            let url = '/api/auth/social/' + provider
+            axios.get(url)
+                .then((response) => {
+                    let data = response.data
+                    window.location.href = data.url
+                })
+                .catch((error) => {
+                    this.setAlert({
+                        status  : true,
+                        text    : 'Login Faild',
+                        color   : 'error',
+                    })
+                })
         },
     },
 }

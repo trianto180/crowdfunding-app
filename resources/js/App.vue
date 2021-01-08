@@ -60,7 +60,7 @@
     </v-navigation-drawer>
 
     <!--header-->
-    <v-app-bar app color="success" dark v-if="isHome">
+    <v-app-bar app color="info" dark v-if="isHome">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>CrowdfundingApp</v-toolbar-title>
 
@@ -90,7 +90,7 @@
         </v-text-field>
     </v-app-bar>
 
-    <v-app-bar app color="success" dark v-else>
+    <v-app-bar app color="info" dark v-else>
         <v-btn icon @click.stop="$router.go(-1)">
             <v-icon>mdi-arrow-left-circle</v-icon>
         </v-btn>
@@ -141,6 +141,7 @@ export default{
         menus: [
             { title: 'Home', icon: 'mdi-home', route: '/' },
             { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' },
+            
         ],
     }),
     computed: {
@@ -169,6 +170,7 @@ export default{
             setDialogComponent  : 'dialog/setComponent',
             setAuth             : 'auth/set',
             setAlert            : 'alert/set',
+            checkToken          : 'auth/checkToken',
         }),
         logout(){
             let config = {
@@ -195,5 +197,10 @@ export default{
             })
         }
     },
+    mounted(){
+        if(this.user){
+            this.checkToken(this.user)
+        }
+    }
 }
 </script>

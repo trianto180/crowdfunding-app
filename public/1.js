@@ -29,6 +29,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'campaign-item',
   props: ['campaign'],
@@ -178,7 +184,7 @@ var render = function() {
             "v-card-actions",
             [
               _c("v-progress-linear", {
-                attrs: { color: "blue-grey", height: "7" },
+                attrs: { color: "info", height: "7" },
                 model: {
                   value: _vm.progress,
                   callback: function($$v) {
@@ -206,7 +212,24 @@ var render = function() {
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
-              _c("span", [_vm._v(" " + _vm._s(_vm.progress) + "%")])
+              _c(
+                "v-progress-circular",
+                {
+                  attrs: { size: 40, color: "info" },
+                  model: {
+                    value: _vm.progress,
+                    callback: function($$v) {
+                      _vm.progress = $$v
+                    },
+                    expression: "progress"
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n            " + _vm._s(_vm.progress) + "%\n            "
+                  )
+                ]
+              )
             ],
             1
           )
@@ -314,7 +337,7 @@ var render = function() {
               _c(
                 "v-carousel",
                 { attrs: { "hide-delimiters": "", height: "250px" } },
-                _vm._l(_vm.blogs, function(blog, i) {
+                _vm._l(_vm.blogs, function(blog, index) {
                   return _c(
                     "v-carousel-item",
                     { key: "blog-" + blog.id, attrs: { xs6: "" } },

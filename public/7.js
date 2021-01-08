@@ -142,7 +142,7 @@ var render = function() {
                           "td",
                           [
                             _c("v-icon", [_vm._v("mdi-home-city")]),
-                            _vm._v("Alamat>")
+                            _vm._v("  Alamat")
                           ],
                           1
                         ),
@@ -155,7 +155,7 @@ var render = function() {
                           "td",
                           [
                             _c("v-icon", [_vm._v("mdi-hand-heart")]),
-                            _vm._v("Terkumpul")
+                            _vm._v("  Terkumpul")
                           ],
                           1
                         ),
@@ -175,7 +175,7 @@ var render = function() {
                           "td",
                           [
                             _c("v-icon", [_vm._v("mdi-cash")]),
-                            _vm._v(" Dibutuhkan")
+                            _vm._v("  Dibutuhkan")
                           ],
                           1
                         ),

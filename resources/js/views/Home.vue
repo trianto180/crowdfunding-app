@@ -33,7 +33,7 @@
             </div>
             <v-layout wrap>
                 <v-carousel hide-delimiters height="250px">
-                <v-carousel-item v-for="(blog, i) in blogs" :key="`blog-`+blog.id" xs6>
+                <v-carousel-item v-for="(blog, index) in blogs" :key="`blog-`+blog.id" xs6>
                     <v-img :src="blog.image" class="fill-height">
                         <v-container fill-height fluid pa-0 ma-0>
                             <v-layout fill-height align-end>

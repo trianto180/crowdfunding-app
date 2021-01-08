@@ -2,7 +2,7 @@ export default {
     namespaced: true,
     state: {
         status  : false,
-        color   : 'success',
+        color   : '',
         text    : ''
     },
     mutations: {

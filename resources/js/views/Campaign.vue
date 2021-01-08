@@ -10,15 +10,15 @@
                 <v-simple-table dense>
                     <tbody>
                         <tr>
-                            <td><v-icon>mdi-home-city</v-icon>Alamat></td>
+                            <td><v-icon>mdi-home-city</v-icon>&nbsp Alamat</td>
                             <td>{{ campaign.address }}</td>
                         </tr>
                         <tr>
-                            <td><v-icon>mdi-hand-heart</v-icon>Terkumpul</td>
+                            <td><v-icon>mdi-hand-heart</v-icon>&nbsp Terkumpul</td>
                             <td class="blue--text">Rp {{ campaign.collected.toLocaleString('id-ID')}}</td>
                         </tr>
                         <tr>
-                            <td><v-icon>mdi-cash</v-icon> Dibutuhkan</td>
+                            <td><v-icon>mdi-cash</v-icon>&nbsp Dibutuhkan</td>
                             <td class="orange--text">Rp {{ campaign.required.toLocaleString('id-ID')}}</td>
                         </tr>
                     </tbody>
